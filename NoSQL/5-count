@@ -1,0 +1,1 @@
+echo 'db.school.count()' | mongo my_db
