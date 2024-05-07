@@ -1,11 +1,20 @@
 {
+    "name": "ES6_basic",
+    "version": "1.0.0",
+    "description": "Proyecto con configuración para Jest, Babel, y ESLint",
+    "main": "index.js",
     "scripts": {
       "lint": "./node_modules/.bin/eslint",
-      "check-lint": "lint [0-9]*.js",
-      "dev": "npx babel-node",
+      "check-lint": "npm run lint [0-9]*.js",
+      "dev": "npx babel-node 0-main.js",
       "test": "jest",
-      "full-test": "./node_modules/.bin/eslint [0-9]*.js && jest"
+      "full-test": "./node_modules/.bin/eslint [0-9]*.js && jest",
+      "start": "node index.js",
+      "build": "babel src --out-dir dist"
     },
+    "author": "Yahsai Santana",
+    "license": "MIT",
+    "dependencies": {},
     "devDependencies": {
       "@babel/core": "^7.23.7",
       "@babel/node": "^7.8.0",
