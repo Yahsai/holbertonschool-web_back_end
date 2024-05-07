@@ -1,16 +1,17 @@
 export default function createReportObject(employeesList) {
-    const allEmployees = {};
-    const departments = [];
-  
-    for (const [department, employees] of Object.entries(employeesList)) {
-      allEmployees[department] = employees;
-      departments.push(department);
+    // Verificación de parámetros
+    if (typeof employeesList !== 'object' || employeesList === null) {
+      throw new Error('Invalid argument: employeesList must be an object');
     }
   
-    const getNumberOfDepartments = () => departments.length;
-  
     return {
-      allEmployees,
-      getNumberOfDepartments,
+      allEmployees: {
+        ...employeesList
+      },
+      // Devuelve el número de departamentos
+      getNumberOfDepartments() {
+        return Object.keys(this.allEmployees).length;
+      }
     };
   }
+  
