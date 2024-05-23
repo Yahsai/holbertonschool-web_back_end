@@ -1,12 +1,5 @@
-export default function groceriesList() {
-    const arr = [
-      ['Apples', 10],
-      ['Tomatoes', 10],
-      ['Pasta', 1],
-      ['Rice', 1],
-      ['Banana', 5],
-    ];
-    const grocery = new Map();
-    for (const i of arr) grocery.set(i[0], i[1]);
-    return grocery;
+export default function updateUniqueItems(map) {
+    if (!(map instanceof Map)) throw Error('Cannot process');
+    for (const i of map) if (i[1] === 1) map.set(i[0], 100);
+    return map;
   }
