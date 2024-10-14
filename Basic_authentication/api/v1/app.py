@@ -40,16 +40,26 @@ def authenticate() -> None:
     if USER is None:
         abort(403)
 
+# Error handler for 401 Unauthorized
 @app.errorhandler(401)
 def unauthorized(error) -> str:
+    """
+    Unauthorized (401) error handler
+    """
     return jsonify({"error": "Unauthorized"}), 401
 
+# Error handler for 403 Forbidden
 @app.errorhandler(403)
-def unauthorized(error) -> str:
+def forbidden(error) -> str:
+    """
+    Forbidden (403) error handler
+    """
     return jsonify({"error": "Forbidden"}), 403
 
+# Error handler for 404 Not Found
 @app.errorhandler(404)
 def not_found(error) -> str:
+    """ Not found handler """
     return jsonify({"error": "Not found"}), 404
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, abort
 
 # Creamos el Blueprint para app_views
 app_views = Blueprint('app_views', __name__, url_prefix='/api/v1')
@@ -21,3 +21,11 @@ def stats():
         "users": User.count()  # Asegúrate de tener un método count en el modelo User
     }
     return jsonify(stats)
+
+# Añadir la ruta para probar el error 401 (Unauthorized)
+@app_views.route('/unauthorized', methods=['GET'], strict_slashes=False)
+def unauthorized_route():
+    """
+    Provoca un error 401 para probar el manejador de errores personalizado.
+    """
+    abort(401)
