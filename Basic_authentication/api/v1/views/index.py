@@ -2,7 +2,10 @@
 """ Module of Index views
 """
 from flask import jsonify, abort
-from api.v1.views.index import app_views  # Importamos directamente desde index en lugar de api.v1.views
+from flask import Blueprint
+
+# Creamos el Blueprint para app_views
+app_views = Blueprint('app_views', __name__, url_prefix='/api/v1')
 
 @app_views.route('/status/', methods=['GET'], strict_slashes=False)
 def status() -> str:
