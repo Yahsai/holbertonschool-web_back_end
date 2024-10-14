@@ -2,9 +2,7 @@
 """ Module of Index views
 """
 from flask import jsonify, abort
-from api.v1.views import app_views
-from typing import Tuple
-
+from api.v1.views.index import app_views  # Importamos directamente desde index en lugar de api.v1.views
 
 @app_views.route('/status/', methods=['GET'], strict_slashes=False)
 def status() -> str:
@@ -27,7 +25,7 @@ def stats() -> str:
     return jsonify(stats)
 
 
-@app_views.route('/unauthorized/')
+@app_views.route('/unauthorized/', methods=['GET'], strict_slashes=False)
 def unauthorized() -> None:
     """
     This path was made to test
@@ -36,7 +34,7 @@ def unauthorized() -> None:
     abort(401)
 
 
-@app_views.route('/forbidden/')
+@app_views.route('/forbidden/', methods=['GET'], strict_slashes=False)
 def forbidden():
     """
     This path was made to test
