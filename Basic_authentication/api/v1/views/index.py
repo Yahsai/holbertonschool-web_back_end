@@ -1,31 +1,45 @@
-from flask import Blueprint, jsonify, abort
+#!/usr/bin/env python3
+""" Module of Index views
+"""
+from flask import jsonify, abort
+from api.v1.views import app_views
+from typing import Tuple
 
-# Creamos el Blueprint para app_views
-app_views = Blueprint('app_views', __name__, url_prefix='/api/v1')
 
-@app_views.route('/status', methods=['GET'], strict_slashes=False)
-def status():
-    """
-    Devuelve el estado de la API.
+@app_views.route('/status/', methods=['GET'], strict_slashes=False)
+def status() -> str:
+    """ GET /api/v1/status
+    Return:
+      - the status of the API
     """
     return jsonify({"status": "OK"})
 
-@app_views.route('/stats', methods=['GET'], strict_slashes=False)
-def stats():
+
+@app_views.route('/stats/', strict_slashes=False)
+def stats() -> str:
+    """ GET /api/v1/stats
+    Return:
+      - the number of each objects
     """
-    Devuelve estadísticas básicas de la API (ejemplo: número de usuarios).
-    """
-    # Si tienes modelos, puedes contar cuántos objetos hay y devolver ese número
     from models.user import User
-    stats = {
-        "users": User.count()  # Asegúrate de tener un método count en el modelo User
-    }
+    stats = {}
+    stats['users'] = User.count()
     return jsonify(stats)
 
-# Añadir la ruta para probar el error 401 (Unauthorized)
-@app_views.route('/unauthorized', methods=['GET'], strict_slashes=False)
-def unauthorized_route():
+
+@app_views.route('/unauthorized/')
+def unauthorized() -> None:
     """
-    Provoca un error 401 para probar el manejador de errores personalizado.
+    This path was made to test
+    the 401 error + Flask.
     """
     abort(401)
+
+
+@app_views.route('/forbidden/')
+def forbidden():
+    """
+    This path was made to test
+    the 403 error + Flask.
+    """
+    abort(403)
