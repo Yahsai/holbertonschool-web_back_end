@@ -6,14 +6,14 @@ to give to the user.
 """
 import flask
 import flask_babel
-from typing import Union
+from typing import Optional
 from os import environ
 
 
 class Config:
     """
-    Contains the allowed languages
-    and default timezone for 'babel'.
+    Configuration class for Babel and allowed languages.
+    Contains the allowed languages and default timezone.
     """
     LANGUAGES = ["en", "fr"]
     BABEL_DEFAULT_LOCALE = "en"
@@ -26,35 +26,23 @@ babel = flask_babel.Babel(app)
 
 
 @babel.localeselector
-def get_locale() -> Union[str, None]:
+def get_locale() -> Optional[str]:
     """
-    Returns the language from 'app.config["LANGUAGES"]'
-    that best matches the languages in the request's
-    'Accept-Language' header,
-    using:
-
-    return flask.request.accept_languages.best_match(
-        app.config["LANGUAGES"]
-    )
+    Select the best match for supported languages from the request.
     """
-    return flask.request.accept_languages.best_match(
-        app.config["LANGUAGES"]
-    )
+    return flask.request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
 @app.route("/", strict_slashes=False)
-def home() -> flask.Response:
+def home() -> str:
     """
-    Returns the 0th template.
-    Has "Welcome to Holberton" as page <title>
-    and "Hello world" as the <h1>.
+    Render the home page template with localized content.
     """
     return flask.render_template("2-index.html")
 
 
 if __name__ == "__main__":
-    app.run(
-        environ.get("HOST"), environ.get("PORT")
-    )
-
-
+    # Fallback to '0.0.0.0' and port 5000 if no HOST/PORT env vars are defined
+    host = environ.get("HOST", "0.0.0.0")
+    port = int(environ.get("PORT", 5000))
+    app.run(host=host, port=port)
